@@ -1,0 +1,82 @@
+.. module:: bcm43362
+
+********
+BCM43362
+********
+
+
+
+This module implements the bcm43362 wifi driver. At the moment some functionalities are missing:
+
+    * soft ap
+    * wifi direct
+
+
+It can be used for every kind of bcm43362 based board, going from the Particle Photon to
+Broadcom Evaluation Boards (not integrated in the IDE).
+
+It is important to remark that Broadcom drivers for Zerynth are distributed as binary only, since the Broadcom license for 
+source code is very restrictive.
+
+The bcm43362 is based on the SDIO standard and also needs some additional pins to function; one which is called WEN (Wireless Enable)
+used as turn on/shutdown; one which is called RST and is used internally to reset the Wifi chip;
+
+
+More info on Broadcom Community: https://community.broadcom.com
+
+
+To use the module expand on the following example: ::
+
+    from broadcom.bcm43362 import bcm43362 as bcm
+    from wireless import wifi
+    
+    bcm.auto_init()
+    for retry in range(10):
+        try:
+            wifi.link("Network-SSID", wifi.WIFI_WPA2, "password")
+            break
+        except Exception as e:
+            print(e)
+
+    if not wifi.is_linked():
+        raise IOError
+
+    
+.. function:: auto_init(country="US")        
+
+        Try to automatically init the bcm43362 driver by looking at the board type.
+        The automatic configuration is possible for Broadcom Evaluation boards and Particle Photon (both USI9 and USI14 modules).
+
+        The *country* argument initializes the driver to use only country available channels.
+
+        PeripheralError is raised in case of failed initialization.
+    
+.. function:: init(boots0,boots1,wen,rst,country)        
+            
+        Try to init the bcm43362 driver:
+
+            * *boots0* and *boots1* are the pins used to configure the chip transfer (SPI vs SDIO). Pass 0xffff if not needed.
+            * *wen* is the pin used as wifi power switch
+            * *rst* is the pin used as wifi reset
+            * *country* is the two letter code of the country. It is used to identify available channels.
+
+    
+.. function:: set_antenna(antenna)
+
+    Select the antenna to be used:
+
+        * 0: antenna 0
+        * 1: antenna 1
+        * 3: automatic antenna selection
+
+    
+.. function:: get_rssi()
+
+    Return the current RSSI in dBm
+
+    
+.. function:: get_error()
+
+    Return the last connection error as an internal code.
+
+    

@@ -1,0 +1,23 @@
+{
+    "dependencies": {
+        "vhal.zerynth.armcmx_nrf52": "r2.0.11"
+    },
+    "description": "BLE driver for NRF52 based chips",
+    "fullname": "lib.nordic.nrf52_ble",
+    "git_pointer": "zerynth://zerynth-libs/nordic-nrf52_ble",
+    "info": {
+        "chip_manufacturer": "Nordic",
+        "chip_name": "NRF52",
+        "name": "Bluetooth Driver",
+        "type": "Connectivity"
+    },
+    "keywords": [
+        "wireless",
+        "ble",
+        "nordic"
+    ],
+    "repo": "official",
+    "title": "Nordic NRF52 BLE driver",
+    "version": "r2.0.11",
+    "whatsnew": " "
+}

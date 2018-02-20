@@ -1,0 +1,3 @@
+#Nordic
+    ##NRF52 BLE
+        BLE_Battery_Service

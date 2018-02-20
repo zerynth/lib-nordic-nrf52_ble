@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BCM43362 &mdash; Broadcom bcm43362 Driver 0.3.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/zerynth.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Broadcom bcm43362 Driver 0.3.2 documentation" href="index.html"/>
+        <link rel="prev" title="Broadcom BCM43362" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> Broadcom bcm43362 Driver</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">BCM43362</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Broadcom bcm43362 Driver</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>BCM43362</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/bcm43362.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <span class="target" id="module-bcm43362"></span><div class="section" id="bcm43362">
+<h1>BCM43362<a class="headerlink" href="#bcm43362" title="Permalink to this headline">¶</a></h1>
+<p>This module implements the bcm43362 wifi driver. At the moment some functionalities are missing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>soft ap</li>
+<li>wifi direct</li>
+</ul>
+</div></blockquote>
+<p>It can be used for every kind of bcm43362 based board, going from the Particle Photon to
+Broadcom Evaluation Boards (not integrated in the IDE).</p>
+<p>It is important to remark that Broadcom drivers for Zerynth are distributed as binary only, since the Broadcom license for
+source code is very restrictive.</p>
+<p>The bcm43362 is based on the SDIO standard and also needs some additional pins to function; one which is called WEN (Wireless Enable)
+used as turn on/shutdown; one which is called RST and is used internally to reset the Wifi chip;</p>
+<p>More info on Broadcom Community: <a class="reference external" href="https://community.broadcom.com">https://community.broadcom.com</a></p>
+<p>To use the module expand on the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">broadcom.bcm43362</span> <span class="kn">import</span> <span class="n">bcm43362</span> <span class="k">as</span> <span class="n">bcm</span>
+<span class="kn">from</span> <span class="nn">wireless</span> <span class="kn">import</span> <span class="n">wifi</span>
+
+<span class="n">bcm</span><span class="o">.</span><span class="n">auto_init</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">retry</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">wifi</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="s">&quot;Network-SSID&quot;</span><span class="p">,</span> <span class="n">wifi</span><span class="o">.</span><span class="n">WIFI_WPA2</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">wifi</span><span class="o">.</span><span class="n">is_linked</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">IOError</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="bcm43362.auto_init">
+<code class="descname">auto_init</code><span class="sig-paren">(</span><em>country=&quot;US&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#bcm43362.auto_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to automatically init the bcm43362 driver by looking at the board type.
+The automatic configuration is possible for Broadcom Evaluation boards and Particle Photon (both USI9 and USI14 modules).</p>
+<p>The <em>country</em> argument initializes the driver to use only country available channels.</p>
+<p>PeripheralError is raised in case of failed initialization.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bcm43362.init">
+<code class="descname">init</code><span class="sig-paren">(</span><em>boots0</em>, <em>boots1</em>, <em>wen</em>, <em>rst</em>, <em>country</em><span class="sig-paren">)</span><a class="headerlink" href="#bcm43362.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to init the bcm43362 driver:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>boots0</em> and <em>boots1</em> are the pins used to configure the chip transfer (SPI vs SDIO). Pass 0xffff if not needed.</li>
+<li><em>wen</em> is the pin used as wifi power switch</li>
+<li><em>rst</em> is the pin used as wifi reset</li>
+<li><em>country</em> is the two letter code of the country. It is used to identify available channels.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="bcm43362.set_antenna">
+<code class="descname">set_antenna</code><span class="sig-paren">(</span><em>antenna</em><span class="sig-paren">)</span><a class="headerlink" href="#bcm43362.set_antenna" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the antenna to be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: antenna 0</li>
+<li>1: antenna 1</li>
+<li>3: automatic antenna selection</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="bcm43362.get_rssi">
+<code class="descname">get_rssi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bcm43362.get_rssi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current RSSI in dBm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bcm43362.get_error">
+<code class="descname">get_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bcm43362.get_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last connection error as an internal code.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Broadcom BCM43362"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Viper Team.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+ var vurl
+ if(location.href.indexOf("127.0.0.1")>=0) vurl=location.protocol+"//"+location.host+"/docs"
+ else vurl="http://doc.zerynth.com"
+ $(document).ready(function(){
+                   $('.wy-breadcrumbs a:contains("Docs")').before('<a href="'+vurl+'">Zerynth</a> &#187;')
+                   $('.wy-side-nav-search > a').removeClass("fa-home").removeClass("fa")
+                   $('.wy-side-nav-search').prepend('<div class="viper-circle"><a href="'+vurl+'"><span style="color:#1c5e60" class="zerynth-Logo2"></span></a></div>')
+ })
+ </script>
+
+
+</body>
+</html>
