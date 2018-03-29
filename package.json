@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "vhal.zerynth.armcmx_nrf52": "r2.0.11"
+        "vhal.zerynth.armcmx_nrf52": "r2.1.0"
     },
     "description": "BLE driver for NRF52 based chips",
     "fullname": "lib.nordic.nrf52_ble",
@@ -18,6 +18,6 @@
     ],
     "repo": "official",
     "title": "Nordic NRF52 BLE driver",
-    "version": "r2.0.11",
+    "version": "r2.1.0",
     "whatsnew": " "
 }
