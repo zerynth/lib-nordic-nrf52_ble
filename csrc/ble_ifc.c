@@ -794,8 +794,12 @@ C_NATIVE(_ble_set_advertising) {
     *res = MAKE_NONE();
     uint8_t *payload;
     uint32_t payloadlen;
-    if (parse_py_args("iisi", nargs, args, &advertising_interval,&advertising_timeout,&payload,&payloadlen,&list_uuids) != 4)
+    uint8_t *payload2;
+    uint32_t payloadlen2;
+    uint32_t mode2;
+    if (parse_py_args("iisis", nargs, args, &advertising_interval,&advertising_timeout,&payload,&payloadlen,&mode2,&payload2,&payloadlen2) != 5)
         return ERR_TYPE_EXC;
+    list_uuids=1;
     advert_data_len=payloadlen;
     if (payloadlen>31) advert_data_len=31;
     memcpy(advert_data,payload,advert_data_len);
