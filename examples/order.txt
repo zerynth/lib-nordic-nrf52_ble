@@ -1,3 +1,7 @@
 #Nordic
     ##NRF52 BLE
+        BLE_Alerts
+        BLE_Alerts_Secure_1
+        BLE_Alerts_Secure_2
         BLE_Battery_Service
+        BLE_Scanner
