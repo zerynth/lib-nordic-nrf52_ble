@@ -1,6 +1,0 @@
-{
-	"title":"NRF52832 BLE Driver",
-	"files":[
-		["NRF52BLE","nrf52_ble.py"]
-	]
-}
