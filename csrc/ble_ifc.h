@@ -1,6 +1,9 @@
 #ifndef __BLE_SERVICE__
 #define __BLE_SERVICE__
 
+// fix for conflict between __opcodes.h and the internal registers of the chip:
+#undef IN
+
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
